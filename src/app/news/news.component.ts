@@ -13,6 +13,6 @@ export class NewsComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log("Home NewsComponent Init")
   }
 }

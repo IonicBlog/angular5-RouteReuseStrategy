@@ -13,6 +13,6 @@ export class ContactComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log("Home ContactComponent Init")
   }
 }

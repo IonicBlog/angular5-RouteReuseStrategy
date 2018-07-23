@@ -13,6 +13,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("Home Component Init")
+    console.log("Home HomeComponent Init")
   }
 }

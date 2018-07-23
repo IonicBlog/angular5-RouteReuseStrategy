@@ -28,12 +28,9 @@ export const Components = [
     BrowserModule, AppRoutingModule
   ],
   providers: [
-    {
-      provide: LocationStrategy,
-      useClass: HashLocationStrategy
-    }
-    ,
-    { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy }],
+    // { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
