@@ -1,7 +1,6 @@
-import { OnInit } from "@angular/core";
-
+import { OnInit, Component, ChangeDetectionStrategy } from "@angular/core";
+ 
 export class BaseComponent implements OnInit {
-
 
     public constructor() {
         console.log("BaseComponent constructor")
