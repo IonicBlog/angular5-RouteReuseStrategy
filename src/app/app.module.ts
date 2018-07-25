@@ -11,6 +11,8 @@ import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { AppRoutingModule } from './app.routing';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { HttpModule, Http } from '@angular/http';
+import { NewsNavComponent } from './news-nav/news-nav.component';
 
 export const Components = [
   HomeComponent,
@@ -22,9 +24,11 @@ export const Components = [
 @NgModule({
   declarations: [
     AppComponent,
-    Components
+    Components,
+    NewsNavComponent
   ],
   imports: [
+    HttpModule,
     BrowserModule, AppRoutingModule
   ],
   providers: [

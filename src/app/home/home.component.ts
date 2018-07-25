@@ -7,12 +7,17 @@ import { Component, OnInit } from "@angular/core";
 })
 
 export class HomeComponent implements OnInit {
-  
-  constructor() { 
+
+  ticks = 0;
+  constructor() {
 
   }
 
   ngOnInit() {
-    console.log("Home HomeComponent Init")
+    console.log("HomeComponent Init")
+    setInterval(() => {
+      this.ticks += 1;
+      // console.log(this.ticks);
+    }, 1000);
   }
 }

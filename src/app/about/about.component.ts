@@ -13,6 +13,6 @@ export class AboutComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("Home AboutComponent Init")
+    console.log("AboutComponent Init")
   }
 }

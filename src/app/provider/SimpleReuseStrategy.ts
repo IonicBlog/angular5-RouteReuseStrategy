@@ -16,25 +16,37 @@ export class SimpleReuseStrategy implements RouteReuseStrategy {
     /** 表示对所有路由允许复用 如果你有路由不想利用可以在这加一些业务逻辑判断 */
     public shouldDetach(route: ActivatedRouteSnapshot): boolean {
         // console.log("shouldDetach")
-        var scrollTop = localStorage.getItem(this.scrollTopStorageKey + window.location.pathname.slice(1));
-        localStorage.setItem(this.scrollTopStorageKey + route.routeConfig.path, document.documentElement.scrollTop.toString())
+        // console.log(SimpleReuseStrategy.handlers) 
+        var component: any = route.component;
+        if (component) {
+            localStorage.setItem(this.scrollTopStorageKey + component.name, document.documentElement.scrollTop.toString())
+        }
+        //有子路由的不复用
+        if (route.routeConfig.children) {
+            return false;
+        }
         return true;
     }
 
     /** 当路由离开时会触发。按path作为key存储路由快照&组件当前实例对象 */
     public store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
         // console.log("store")
+        // console.log(SimpleReuseStrategy.handlers)
         SimpleReuseStrategy.handlers[route.routeConfig.path] = handle
     }
 
     /** 若 path 在缓存中有的都认为允许还原路由 */
     public shouldAttach(route: ActivatedRouteSnapshot): boolean {
         // console.log("shouldAttach")
-        var scrollTop = localStorage.getItem(this.scrollTopStorageKey + window.location.pathname.slice(1));
-        if (scrollTop != null && scrollTop != "0") {
-            setTimeout(function () {
-                document.documentElement.scrollTop = parseInt(scrollTop);
-            }, 100)
+        // console.log(SimpleReuseStrategy.handlers)
+        var component: any = route.component;
+        if (component) {
+            var scrollTop = localStorage.getItem(this.scrollTopStorageKey + component.name);
+            if (scrollTop != null && scrollTop != "0") {
+                setTimeout(function () {
+                    document.documentElement.scrollTop = parseInt(scrollTop);
+                }, 100)
+            }
         }
         return !!route.routeConfig && !!SimpleReuseStrategy.handlers[route.routeConfig.path]
     }
@@ -42,15 +54,16 @@ export class SimpleReuseStrategy implements RouteReuseStrategy {
     /** 从缓存中获取快照，若无则返回nul */
     public retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle {
         // console.log("retrieve")
-        if (!route.routeConfig) {
-            return null
-        }
-        return SimpleReuseStrategy.handlers[route.routeConfig.path]
+        // console.log(SimpleReuseStrategy.handlers)
+        if (!route.routeConfig) return null;
+        if (route.routeConfig.loadChildren) return null;
+        return SimpleReuseStrategy.handlers[route.routeConfig.path];
     }
 
     /** 进入路由触发，判断是否同一路由 */
     public shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
         // console.log("shouldReuseRoute")
+        // console.log(SimpleReuseStrategy.handlers)
         return future.routeConfig === curr.routeConfig
     }
 }
